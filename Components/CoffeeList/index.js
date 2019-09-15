@@ -10,12 +10,14 @@ import coffeeStore from "../../store/coffeeStore";
 // Component
 import CoffeeItem from "./CoffeeItem";
 import CartButton from "../CartButton";
+import LogoutButton from "../CartButton/LogoutButton";
 
 class CoffeeList extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Coffee List",
     headerLeft: null,
-    headerRight: <CartButton />
+    headerRight: <CartButton />,
+    headerLeft: <LogoutButton />
   });
   render() {
     const coffeeshops = coffeeStore.coffeeshops;

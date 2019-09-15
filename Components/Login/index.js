@@ -15,11 +15,17 @@ import {
   Header
 } from "native-base";
 
+// Store
+import authStore from "../../store/authStore";
+
 class Login extends Component {
-  static navigationOptions = {
-    title: "Login"
+  state = {
+    username: "",
+    password: ""
   };
   render() {
+    const { navigation } = this.props;
+    if (authStore.user) navigation.replace("CoffeeList");
     return (
       <Content>
         <Header transparent />
@@ -38,7 +44,11 @@ class Login extends Component {
                     marginBottom: 10
                   }}
                 >
-                  <Input autoCorrect={false} autoCapitalize="none" />
+                  <Input
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onChangeText={username => this.setState({ username })}
+                  />
                 </Item>
                 <Body>
                   <Label style={{ color: "white" }}>Password</Label>
@@ -51,6 +61,7 @@ class Login extends Component {
                     autoCorrect={false}
                     secureTextEntry
                     autoCapitalize="none"
+                    onChangeText={password => this.setState({ password })}
                   />
                 </Item>
               </Form>
@@ -59,14 +70,14 @@ class Login extends Component {
           <Button
             full
             success
-            onPress={() => this.props.navigation.replace("CoffeeList")}
+            onPress={() => authStore.login(this.state, navigation)}
           >
             <Text>Login</Text>
           </Button>
           <Button
             full
             warning
-            onPress={() => this.props.navigation.replace("CoffeeList")}
+            onPress={() => authStore.signup(this.state, navigation)}
           >
             <Text>Register</Text>
           </Button>
